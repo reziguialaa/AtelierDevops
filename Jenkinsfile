@@ -21,7 +21,7 @@ pipeline {
         stage('SonarQube Analysis') {
             steps {
                 withSonarQubeEnv('SonarQube') {
-                    sh 'mvn sonar:sonar'
+                    sh 'mvn sonar:sonar -D sonar.projectKey=AtelierDevops -D sonar.token=sqa_8317ed8683a0540f9245256fb7cf98304e4088ed'
                 }
             }
         }
