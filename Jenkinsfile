@@ -27,16 +27,18 @@ pipeline {
                     def version = '1.0'
                     def packaging = 'jar'
 
-                    sh "mvn deploy:deploy-file -DgroupId=${groupId} " +
-                       "-DartifactId=${artifactId} " +
-                       "-Dversion=${version} " +
-                       "-Dpackaging=${packaging} " +
-                       "-Dfile=target/${artifactId}-${version}.${packaging} " +
-                       "-DrepositoryId=maven-releases " +
-                       "-Durl=${nexusUrl} " +
-                       "-DskipTests=true " +
-                       "-Dusername=${NEXUS_USERNAME} " +
-                       "-Dpassword=${NEXUS_PASSWORD}"   
+                    withCredentials([usernamePassword(credentialsId: 'nexus-credentials', usernameVariable: 'NEXUS_USER', passwordVariable: 'NEXUS_PASSWORD')]) {
+                        sh "mvn deploy:deploy-file -DgroupId=${groupId} " +
+                           "-DartifactId=${artifactId} " +
+                           "-Dversion=${version} " +
+                           "-Dpackaging=${packaging} " +
+                           "-Dfile=target/${artifactId}-${version}.${packaging} " +
+                           "-DrepositoryId=maven-releases " +
+                           "-Durl=${nexusUrl} " +
+                           "-DskipTests=true " +
+                           "-Dusername=${NEXUS_USER} " +
+                           "-Dpassword=${NEXUS_PASSWORD}"
+                    }
                 }
             }
         }
