@@ -27,7 +27,8 @@ pipeline {
                     def version = '1.0'
                     def packaging = 'jar'
 
-                    withCredentials([usernamePassword(credentialsId: 'nexus-credentials', usernameVariable: 'NEXUS_USER', passwordVariable: 'NEXUS_PASSWORD')]) {
+                    // Use the correct credentials ID
+                    withCredentials([usernamePassword(credentialsId: '582e4716-0415-4408-a261-5766d6d82697', usernameVariable: 'NEXUS_USER', passwordVariable: 'NEXUS_PASSWORD')]) {
                         sh "mvn deploy:deploy-file -DgroupId=${groupId} " +
                            "-DartifactId=${artifactId} " +
                            "-Dversion=${version} " +
