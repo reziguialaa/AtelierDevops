@@ -21,7 +21,7 @@ pipeline {
         stage('Deploy to Nexus') {
             steps {
                 script {
-                    def nexusUrl = 'http://localhost:8081/repository/maven-releases/'
+                    def nexusUrl = 'http://192.168.152.130:8081/repository/maven-releases/'
                     def groupId = 'tn.esprit.spring.services'
                     def artifactId = 'timesheet-devops'
                     def version = '1.0'
