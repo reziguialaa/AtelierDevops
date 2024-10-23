@@ -33,7 +33,7 @@ pipeline {
                        "-Dversion=${version} " +
                        "-Dpackaging=${packaging} " +
                        "-Dfile=target/${artifactId}-${version}.${packaging} " +
-                       "-DrepositoryId=deploymentRepo " +
+                       "-DrepositoryId=maven-releases " +
                        "-Durl=${nexusUrl} " +
                        "-DskipTests=true"
                 }
