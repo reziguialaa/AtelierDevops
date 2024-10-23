@@ -20,7 +20,6 @@ pipeline {
 
         stage('Deploy to Nexus') {
             steps {
-                
                 script {
                     def nexusUrl = 'http://localhost:8081/repository/maven-releases/'
                     def groupId = 'tn.esprit.spring.services'
@@ -35,7 +34,9 @@ pipeline {
                        "-Dfile=target/${artifactId}-${version}.${packaging} " +
                        "-DrepositoryId=maven-releases " +
                        "-Durl=${nexusUrl} " +
-                       "-DskipTests=true"
+                       "-DskipTests=true " +
+                       "-Dusername=${NEXUS_USERNAME} " +
+                       "-Dpassword=${NEXUS_PASSWORD}"   
                 }
             }
         }
