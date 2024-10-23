@@ -2,7 +2,7 @@ pipeline {
     agent any
     
     tools {
-        maven 'M2_HOME' // Adjust this if your Maven tool is configured differently
+        maven 'M2_HOME'
     }
 
     stages {
