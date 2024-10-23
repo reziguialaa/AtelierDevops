@@ -21,7 +21,7 @@ pipeline {
 
         stage('Deploy to Nexus') {
             steps {
-                withMaven(settings: 'path/to/your/settings.xml') { 
+                withMaven(settings: '~/.m2/settings.xml') { 
                     sh 'mvn deploy'
                 }
             }
