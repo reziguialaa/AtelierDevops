@@ -1,11 +1,19 @@
 pipeline {
     agent any
     tools {
-        maven 'M2_HOME'
+        maven 'M2_HOME' 
+    }
+
+    environment {
+        NEXUS_URL = 'http://localhost:8081/repository/maven-releases/'
+        NEXUS_CREDENTIALS = '582e4716-0415-4408-a261-5766d6d82697'  
+        MAVEN_GROUP_ID = 'tn.esprit.spring.services'
+        MAVEN_ARTIFACT_ID = 'timesheet-devops'
+        MAVEN_VERSION = '1.0'
     }
 
     stages {
-        stage('GIT') {
+        stage('Checkout') {
             steps {
                 git branch: 'main',
                 url: 'https://github.com/reziguialaa/AtelierDevops.git'
@@ -21,7 +29,25 @@ pipeline {
         stage('SonarQube Analysis') {
             steps {
                 withSonarQubeEnv('SonarQube') {
-                    sh 'mvn sonar:sonar -D sonar.projectKey=AtelierDevops -D sonar.token=sqa_8317ed8683a0540f9245256fb7cf98304e4088ed'
+                    sh 'mvn sonar:sonar -Dsonar.projectKey=AtelierDevops -Dsonar.token=sqa_8317ed8683a0540f9245256fb7cf98304e4088ed'
+                }
+            }
+        }
+
+        stage('Deploy to Nexus') {
+            steps {
+                script {
+                    sh """
+                    mvn deploy:deploy-file \
+                      -DgroupId=${MAVEN_GROUP_ID} \
+                      -DartifactId=${MAVEN_ARTIFACT_ID} \
+                      -Dversion=${MAVEN_VERSION} \
+                      -Dpackaging=jar \
+                      -DrepositoryId=deploymentRepo \
+                      -Durl=${NEXUS_URL} \
+                      -Dfile=target/${MAVEN_ARTIFACT_ID}-${MAVEN_VERSION}.jar \
+                      --settings /path/to/your/settings.xml
+                    """
                 }
             }
         }
