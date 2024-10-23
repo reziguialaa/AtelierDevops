@@ -1,14 +1,15 @@
 pipeline {
     agent any
+    
     tools {
-        maven 'M2_HOME'
+        maven 'M2_HOME' // Adjust this if your Maven tool is configured differently
     }
 
     stages {
         stage('GIT') {
             steps {
                 git branch: 'main',
-                url: 'https://github.com/reziguialaa/AtelierDevops.git'
+                    url: 'https://github.com/reziguialaa/AtelierDevops.git'
             }
         }
 
@@ -20,8 +21,10 @@ pipeline {
 
         stage('Deploy to Nexus') {
             steps {
-                sh 'mvn deploy -X'
+                withMaven(settings: 'path/to/your/settings.xml') { 
+                    sh 'mvn deploy'
                 }
+            }
         }
     }
 }
