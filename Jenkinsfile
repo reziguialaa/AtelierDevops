@@ -28,23 +28,24 @@ pipeline {
             }
         }
 
-        stage('Deploy to Nexus') {
-            steps {
-                script {
-                    sh """
-                    mvn deploy:deploy-file \
-                      -DgroupId=${MAVEN_GROUP_ID} \
-                      -DartifactId=${MAVEN_ARTIFACT_ID} \
-                      -Dversion=${MAVEN_VERSION} \
-                      -Dpackaging=jar \
-                      -DrepositoryId=deploymentRepo \
-                      -Durl=${NEXUS_URL} \
-                      -Dfile=target/${MAVEN_ARTIFACT_ID}-${MAVEN_VERSION}.jar \
-                      -Dusername=${NEXUS_USERNAME} \
-                      -Dpassword=${NEXUS_PASSWORD}
-                    """
-                }
-            }
+       stage('Deploy to Nexus') {
+    steps {
+        script {
+            sh """
+            mvn deploy:deploy-file \
+              -DgroupId=${MAVEN_GROUP_ID} \
+              -DartifactId=${MAVEN_ARTIFACT_ID} \
+              -Dversion=${MAVEN_VERSION} \
+              -Dpackaging=jar \
+              -DrepositoryId=deploymentRepo \
+              -Durl=${NEXUS_URL} \
+              -Dfile=target/${MAVEN_ARTIFACT_ID}-${MAVEN_VERSION}.jar \
+              -Dusername=${NEXUS_USERNAME} \
+              -Dpassword=${NEXUS_PASSWORD}
+            """
         }
+    }
+}
+
     }
 }
