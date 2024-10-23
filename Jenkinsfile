@@ -22,7 +22,7 @@ pipeline {
             steps {
                 
                 script {
-                    def nexusUrl = 'http://localhost:8081/repository/'
+                    def nexusUrl = 'http://localhost:8081/repository/maven-releases/'
                     def groupId = 'tn.esprit.spring.services'
                     def artifactId = 'timesheet-devops'
                     def version = '1.0'
