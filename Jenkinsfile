@@ -19,10 +19,6 @@ pipeline {
             }
         }
 
-        stage('Deploy to Nexus') {
-            steps {
-                    sh 'mvn deploy -s ~/.m2/settings.xml -X'
-            }
-        }
+      
     }
 }
